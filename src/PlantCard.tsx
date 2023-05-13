@@ -11,7 +11,7 @@ function PlantCard({ plant }: any) {
       <div>
         <img
           src={plant.similar_images[0]?.url_small}
-          alt={`${plant.plant_name} photo`}
+          alt={`${plant.plant_name}`}
         />
       </div>
     </div>
