@@ -7,6 +7,7 @@ import {
   faCircleNotch,
 } from "@fortawesome/free-solid-svg-icons";
 import Result from "./Result";
+import placeholderImage from "./placeholder-image.png";
 
 function App() {
   const [image, setImage] = useState("");
@@ -85,7 +86,15 @@ function App() {
         </button>
       </div>
       <div className="image-container">
-        <img className="image" src={image} alt="uploaded plants photo" />
+        {image ? (
+          <img className="image" src={image} alt="uploaded plants" />
+        ) : (
+          <div
+            className="image-placeholder"
+            style={{ backgroundImage: `url(${placeholderImage})` }}
+          ></div>
+        )}
+
         {isIdentifying && (
           <>
             <div className="image-filter"></div>

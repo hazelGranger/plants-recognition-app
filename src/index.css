@@ -72,9 +72,17 @@ a {
   position: relative;
 }
 
+.image-placeholder {
+  width: 100%;
+  background-size: contain;
+  height: 300px;
+  border: 2px solid #a1a1a1;
+  margin: 3rem 0;
+}
+
 .image {
   width: 100%;
-  margin: 1.5rem auto;
+  margin: 3rem auto;
   display: block;
 }
 
