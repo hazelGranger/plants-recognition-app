@@ -85,7 +85,7 @@ function App() {
         </button>
       </div>
       <div className="image-container">
-        <img className="image" src={image} />
+        <img className="image" src={image} alt="uploaded plants photo" />
         {isIdentifying && (
           <>
             <div className="image-filter"></div>
