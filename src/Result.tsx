@@ -11,7 +11,7 @@ function Result({ result }: IResult) {
         <p>This might not be a plant!</p>
       ) : (
         <div>
-          <p>Results:</p>
+          <p>Possible Results:</p>
           {result.suggestions.map((v: any) => {
             return <PlantCard plant={v} />;
           })}
@@ -20,7 +20,7 @@ function Result({ result }: IResult) {
     </div>
   ) : (
     <></>
-  )
+  );
 }
 
 export default Result;

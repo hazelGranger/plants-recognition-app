@@ -1,13 +1,18 @@
-import axios from "axios";
-import React, { ChangeEvent, useState } from "react";
+import axios, { AxiosError } from "axios";
+import { ChangeEvent, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faImages, faMagnifyingGlass, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
+import {
+  faImages,
+  faMagnifyingGlass,
+  faCircleNotch,
+} from "@fortawesome/free-solid-svg-icons";
 import Result from "./Result";
 
 function App() {
   const [image, setImage] = useState("");
   const [result, setResult] = useState(null);
   const [isIdentifying, setIsIdentifying] = useState(false);
+  const [error, setError] = useState<AxiosError | null>(null);
 
   const handleSelectImages = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files != null) {
@@ -30,16 +35,21 @@ function App() {
     setIsIdentifying(true);
 
     axios
-      .post("http://localhost:3001/identify", {
+      .post(`${process.env.REACT_APP_API_URL}/identify`, {
         images: [image],
       })
-      .then( v => {
+      .then((v) => {
         console.log(v.data);
         setResult(v.data);
         setIsIdentifying(false);
       })
-      .catch((err) => {
+      .catch((err: AxiosError) => {
         console.error(err);
+        setIsIdentifying(false);
+        setError(err);
+        setTimeout(() => {
+          setError(null);
+        }, 5000);
       });
   };
 
@@ -62,26 +72,31 @@ function App() {
 
         <button className="button" onClick={identify}>
           <div className="button-inner">
-            {
-              isIdentifying ? 
-              <FontAwesomeIcon className="spinner" icon={faCircleNotch}></FontAwesomeIcon> :
+            {isIdentifying ? (
+              <FontAwesomeIcon
+                className="spinner"
+                icon={faCircleNotch}
+              ></FontAwesomeIcon>
+            ) : (
               <FontAwesomeIcon icon={faMagnifyingGlass}></FontAwesomeIcon>
-            }
+            )}
             <span className="button-icon-text">Identify</span>
           </div>
         </button>
       </div>
       <div className="image-container">
         <img className="image" src={image} />
-        {
-          isIdentifying && (
-            <>
-               <div className="image-filter"></div>
-               <FontAwesomeIcon className="identifying" icon={faMagnifyingGlass}></FontAwesomeIcon>
-            </>
-          )
-        }
+        {isIdentifying && (
+          <>
+            <div className="image-filter"></div>
+            <FontAwesomeIcon
+              className="identifying"
+              icon={faMagnifyingGlass}
+            ></FontAwesomeIcon>
+          </>
+        )}
       </div>
+      {error && <p className="error">{error.message}!</p>}
       <Result result={result} />
     </div>
   );
