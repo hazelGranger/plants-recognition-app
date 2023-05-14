@@ -78,6 +78,8 @@ a {
   height: 300px;
   border: 2px solid #a1a1a1;
   margin: 3rem 0;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .image {
