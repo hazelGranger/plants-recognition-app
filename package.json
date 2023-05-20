@@ -47,6 +47,7 @@
     ]
   },
   "devDependencies": {
+    "@netlify/functions": "^1.6.0",
     "prettier": "^2.7.1"
   }
 }
