@@ -1,5 +1,5 @@
 import { Handler } from "@netlify/functions";
-import { identifyPlantsByImages } from "../../src/plants-identify";
+import { identifyPlantsByImages } from "../../../src/plants-identify";
 
 export const handler: Handler = async (event, context) => {
   const api_key = process.env.API_KEY;
