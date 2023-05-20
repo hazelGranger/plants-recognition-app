@@ -15,6 +15,8 @@ function App() {
   const [isIdentifying, setIsIdentifying] = useState(false);
   const [error, setError] = useState<AxiosError | null>(null);
 
+  console.log(process.env, process.env.REACT_APP_API_URL);
+
   const handleSelectImages = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files != null) {
       var reader = new FileReader();
@@ -40,7 +42,6 @@ function App() {
         images: [image],
       })
       .then((v) => {
-        console.log(v.data);
         setResult(v.data);
         setIsIdentifying(false);
       })
