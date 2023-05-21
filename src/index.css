@@ -137,6 +137,13 @@ a {
 .title {
   margin: 0;
   margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo {
+  width: 2rem;
 }
 
 @keyframes spin {

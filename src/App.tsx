@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Result from "./Result";
 import placeholderImage from "./placeholder-image.png";
+import logo from "./logo.svg";
 
 function App() {
   const [image, setImage] = useState("");
@@ -56,7 +57,10 @@ function App() {
 
   return (
     <div className="App-container">
-      <h2 className="title">Plants Identification</h2>
+      <h2 className="title">
+        <img src={logo} className="logo" />
+        Plants Identification
+      </h2>
       <div className="image-container">
         {image ? (
           <img className="image" src={image} alt="uploaded plants" />
@@ -103,7 +107,7 @@ function App() {
           <div className="button-inner">
             <FontAwesomeIcon icon={faImages}></FontAwesomeIcon>
             <span className="button-icon-text">
-              {image ? "Upload a different image" : "Upload an image"}
+              {image ? "Change image" : "Upload an image"}
             </span>
           </div>
           <input
