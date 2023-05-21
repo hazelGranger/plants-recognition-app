@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: "Josefin Sans", sans-serif;
@@ -14,7 +18,7 @@ a {
   width: 50%;
   min-width: 22rem;
   margin: auto;
-  padding: 2rem 0 6rem;
+  padding: 2rem 2rem 6rem;
 }
 
 .button {
@@ -24,15 +28,17 @@ a {
   padding: 0;
   display: inline-block;
   font-size: 1rem;
+  width: auto;
 }
 
-.button-wapper {
+.button-wrapper {
   display: flex;
   flex-wrap: wrap;
   margin: auto;
   justify-content: space-between;
   gap: 1.5rem;
   width: 100%;
+  margin-bottom: 3rem;
 }
 
 .button input {
@@ -77,14 +83,15 @@ a {
   background-size: contain;
   height: 300px;
   border: 2px solid #a1a1a1;
-  margin: 3rem 0;
+  margin: 3rem 0 1.5rem;
   background-repeat: no-repeat;
   background-position: center;
+  cursor: pointer;
 }
 
 .image {
   width: 100%;
-  margin: 3rem auto;
+  margin: 3rem auto 1.5rem;
   display: block;
 }
 

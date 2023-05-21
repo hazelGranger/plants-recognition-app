@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faImages,
@@ -14,8 +14,7 @@ function App() {
   const [result, setResult] = useState(null);
   const [isIdentifying, setIsIdentifying] = useState(false);
   const [error, setError] = useState<AxiosError | null>(null);
-
-  console.log(process.env, process.env.REACT_APP_API_URL);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSelectImages = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files != null) {
@@ -58,34 +57,6 @@ function App() {
   return (
     <div className="App-container">
       <h2 className="title">Plants Identification</h2>
-      <div className="button-wapper">
-        <label className="button">
-          <div className="button-inner">
-            <FontAwesomeIcon icon={faImages}></FontAwesomeIcon>
-            <span className="button-icon-text">Upload an image</span>
-          </div>
-          <input
-            type="file"
-            multiple
-            accept="image/*"
-            onChange={handleSelectImages}
-          />
-        </label>
-
-        <button className="button" onClick={identify}>
-          <div className="button-inner">
-            {isIdentifying ? (
-              <FontAwesomeIcon
-                className="spinner"
-                icon={faCircleNotch}
-              ></FontAwesomeIcon>
-            ) : (
-              <FontAwesomeIcon icon={faMagnifyingGlass}></FontAwesomeIcon>
-            )}
-            <span className="button-icon-text">Identify</span>
-          </div>
-        </button>
-      </div>
       <div className="image-container">
         {image ? (
           <img className="image" src={image} alt="uploaded plants" />
@@ -93,6 +64,11 @@ function App() {
           <div
             className="image-placeholder"
             style={{ backgroundImage: `url(${placeholderImage})` }}
+            onClick={(e) => {
+              if (fileInputRef && fileInputRef.current) {
+                fileInputRef.current.click();
+              }
+            }}
           ></div>
         )}
 
@@ -106,6 +82,40 @@ function App() {
           </>
         )}
       </div>
+      <div className="button-wrapper">
+        {image && (
+          <button className="button" onClick={identify}>
+            <div className="button-inner">
+              {isIdentifying ? (
+                <FontAwesomeIcon
+                  className="spinner"
+                  icon={faCircleNotch}
+                ></FontAwesomeIcon>
+              ) : (
+                <FontAwesomeIcon icon={faMagnifyingGlass}></FontAwesomeIcon>
+              )}
+              <span className="button-icon-text">Identify</span>
+            </div>
+          </button>
+        )}
+
+        <label className="button">
+          <div className="button-inner">
+            <FontAwesomeIcon icon={faImages}></FontAwesomeIcon>
+            <span className="button-icon-text">
+              {image ? "Upload a different image" : "Upload an image"}
+            </span>
+          </div>
+          <input
+            type="file"
+            multiple
+            accept="image/*"
+            onChange={handleSelectImages}
+            ref={fileInputRef}
+          />
+        </label>
+      </div>
+
       {error && <p className="error">{error.message}!</p>}
       <Result result={result} />
     </div>
