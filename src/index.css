@@ -2,11 +2,18 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 body {
   margin: 0;
   font-family: "Josefin Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 a {
@@ -30,6 +37,12 @@ a {
   font-size: 1rem;
   max-width: 100%;
   text-align: center;
+}
+
+@media only screen and (max-width: 480px) {
+  .button {
+    width: 100%;
+  }
 }
 
 .button-wrapper {
