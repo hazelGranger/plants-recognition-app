@@ -58,7 +58,7 @@ function App() {
   return (
     <div className="App-container">
       <h2 className="title">
-        <img src={logo} className="logo" />
+        <img src={logo} className="logo" alt="logo" />
         Plants Identification
       </h2>
       <div className="image-container">
