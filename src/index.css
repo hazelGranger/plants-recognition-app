@@ -26,9 +26,10 @@ a {
   box-shadow: 0px 8px 0 #2d4119, 0 10px 15px rgb(0 0 0 / 35%);
   border: none;
   padding: 0;
-  display: inline-block;
+  display: inline-flex;
   font-size: 1rem;
-  width: auto;
+  max-width: 100%;
+  text-align: center;
 }
 
 .button-wrapper {
@@ -56,6 +57,7 @@ a {
   background-color: #588030;
   transition: transform 0.1s ease-in-out;
   line-height: 0;
+  width: 100%;
 }
 
 .button:active {
@@ -81,7 +83,7 @@ a {
 .image-placeholder {
   width: 100%;
   background-size: contain;
-  height: 300px;
+  padding-top: 62.5%;
   border: 2px solid #a1a1a1;
   margin: 3rem 0 1.5rem;
   background-repeat: no-repeat;
