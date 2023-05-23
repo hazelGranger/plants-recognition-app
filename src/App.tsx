@@ -1,14 +1,9 @@
 import axios, { AxiosError } from "axios";
 import { ChangeEvent, useRef, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faImages,
-  faMagnifyingGlass,
-  faCircleNotch,
-} from "@fortawesome/free-solid-svg-icons";
 import Result from "./Result";
-import placeholderImage from "./placeholder-image.png";
-import logo from "./logo.svg";
+import Title from "./components/Title";
+import ActionPanel from "./components/ActionPanel";
+import ImageContainer from "./components/ImageContainer";
 
 function App() {
   const [image, setImage] = useState("");
@@ -57,69 +52,19 @@ function App() {
 
   return (
     <div className="App-container">
-      <h2 className="title">
-        <img src={logo} className="logo" alt="logo" />
-        Plants Identification
-      </h2>
-      <div className="image-container">
-        {image ? (
-          <img className="image" src={image} alt="uploaded plants" />
-        ) : (
-          <div
-            className="image-placeholder"
-            style={{ backgroundImage: `url(${placeholderImage})` }}
-            onClick={(e) => {
-              if (fileInputRef && fileInputRef.current) {
-                fileInputRef.current.click();
-              }
-            }}
-          ></div>
-        )}
-
-        {isIdentifying && (
-          <>
-            <div className="image-filter"></div>
-            <FontAwesomeIcon
-              className="identifying"
-              icon={faMagnifyingGlass}
-            ></FontAwesomeIcon>
-          </>
-        )}
-      </div>
-      <div className="button-wrapper">
-        {image && (
-          <button className="button" onClick={identify}>
-            <div className="button-inner">
-              {isIdentifying ? (
-                <FontAwesomeIcon
-                  className="spinner"
-                  icon={faCircleNotch}
-                ></FontAwesomeIcon>
-              ) : (
-                <FontAwesomeIcon icon={faMagnifyingGlass}></FontAwesomeIcon>
-              )}
-              <span className="button-icon-text">Identify</span>
-            </div>
-          </button>
-        )}
-
-        <label className="button">
-          <div className="button-inner">
-            <FontAwesomeIcon icon={faImages}></FontAwesomeIcon>
-            <span className="button-icon-text">
-              {image ? "Change image" : "Upload an image"}
-            </span>
-          </div>
-          <input
-            type="file"
-            multiple
-            accept="image/*"
-            onChange={handleSelectImages}
-            ref={fileInputRef}
-          />
-        </label>
-      </div>
-
+      <Title>Plants Identification</Title>
+      <ImageContainer
+        image={image}
+        isIdentifying={isIdentifying}
+        fileInputRef={fileInputRef}
+      />
+      <ActionPanel
+        hasImage={!!image}
+        isIdentifying={isIdentifying}
+        fileInputRef={fileInputRef}
+        handleSelectImages={handleSelectImages}
+        handleIdentify={identify}
+      />
       {error && <p className="error">{error.message}!</p>}
       <Result result={result} />
     </div>
