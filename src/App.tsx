@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { ChangeEvent, useRef, useState } from "react";
 import Result from "./Result";
 import Title from "./components/Title";
@@ -56,7 +56,7 @@ function App() {
       <ActionPanel
         hasImage={!!image}
         isIdentifying={isIdentifying}
-        fileInputRef={fileInputRef}
+        ref={fileInputRef}
         handleSelectImages={handleSelectImages}
         handleIdentify={identify}
       />
