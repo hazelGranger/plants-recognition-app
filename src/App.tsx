@@ -4,6 +4,7 @@ import Result from "./Result";
 import Title from "./components/Title";
 import ActionPanel from "./components/ActionPanel";
 import ImageContainer from "./components/ImageContainer";
+import { identifySpecies } from "./services/identify";
 
 function App() {
   const [image, setImage] = useState("");
@@ -25,29 +26,23 @@ function App() {
       reader.onerror = (error) => {
         console.log("Error: ", error);
       };
-      setImage(URL.createObjectURL(e.target.files[0]));
     }
   };
 
-  const identify = () => {
+  const identify = async () => {
     setIsIdentifying(true);
 
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/identify`, {
-        images: [image],
-      })
-      .then((v) => {
-        setResult(v.data);
-        setIsIdentifying(false);
-      })
-      .catch((err: AxiosError) => {
-        console.error(err);
-        setIsIdentifying(false);
-        setError(err);
-        setTimeout(() => {
-          setError(null);
-        }, 5000);
-      });
+    try {
+      const result = await identifySpecies(image);
+      setResult(result.data);
+      setIsIdentifying(false);
+    } catch (error) {
+      setIsIdentifying(false);
+      setError(error as AxiosError);
+      setTimeout(() => {
+        setError(null);
+      }, 5000);
+    }
   };
 
   return (
