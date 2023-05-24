@@ -5,13 +5,13 @@ import placeholderImage from "../placeholder-image.png";
 type ImageContainerProps = {
   image: string; // base64string
   isIdentifying: boolean;
-  fileInputRef: React.RefObject<HTMLInputElement>;
+  handleClick: () => void;
 };
 
 const ImageContainer = ({
   image,
   isIdentifying,
-  fileInputRef,
+  handleClick,
 }: ImageContainerProps) => {
   return (
     <div className="image-container">
@@ -21,11 +21,7 @@ const ImageContainer = ({
         <div
           className="image-placeholder"
           style={{ backgroundImage: `url(${placeholderImage})` }}
-          onClick={(e) => {
-            if (fileInputRef && fileInputRef.current) {
-              fileInputRef.current.click();
-            }
-          }}
+          onClick={handleClick}
         ></div>
       )}
 
