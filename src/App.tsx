@@ -71,6 +71,7 @@ function App() {
         isIdentifying={isIdentifying}
         handleClick={onClickImagePlaceholder}
       />
+      {!!error && <p className="error">{error.message}!</p>}
       <ActionPanel
         hasImage={!!image}
         isIdentifying={isIdentifying}
@@ -78,7 +79,6 @@ function App() {
         handleSelectImages={handleSelectImages}
         handleIdentify={identify}
       />
-      {!!error && <p className="error">{error.message}!</p>}
       <Result result={result} />
     </div>
   );

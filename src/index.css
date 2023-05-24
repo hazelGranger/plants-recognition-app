@@ -23,9 +23,9 @@ a {
 .App-container {
   height: 100%;
   width: 50%;
-  min-width: 22rem;
+  min-width: 21rem;
   margin: auto;
-  padding: 2rem 2rem 6rem;
+  padding: 2rem 1rem 6rem;
 }
 
 .button {

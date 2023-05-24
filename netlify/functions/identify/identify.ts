@@ -13,9 +13,7 @@ export const handler: Handler = async (event, context) => {
 
   try {
     var result = await identifyPlantsByImages(images, api_key);
-    // console.log(result, "call this");
     if (result.status === 200) {
-      // console.log(result);
       return {
         statusCode: 200,
         headers: headers,
@@ -28,7 +26,7 @@ export const handler: Handler = async (event, context) => {
     return {
       headers: headers,
       statusCode: err.response?.status ?? 500,
-      body: JSON.stringify({ error: err.message }),
+      body: JSON.stringify({ error: "Server fails to response, please try again later." }),
     };
   }
 
