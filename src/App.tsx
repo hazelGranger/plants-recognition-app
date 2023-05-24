@@ -1,6 +1,5 @@
 import { AxiosError } from "axios";
 import { ChangeEvent, useRef, useState } from "react";
-import Modal from "react-modal";
 import Result from "./Result";
 import Title from "./components/Title";
 import ActionPanel from "./components/ActionPanel";
@@ -8,8 +7,6 @@ import ImageContainer from "./components/ImageContainer";
 import { identifySpecies } from "./services/identify";
 import { allowedImageTypes } from "./constants";
 import { Error } from "./types/error";
-
-Modal.setAppElement("#root");
 
 function App() {
   const [image, setImage] = useState("");
@@ -83,9 +80,6 @@ function App() {
       />
       {!!error && <p className="error">{error.message}!</p>}
       <Result result={result} />
-      {/* <Modal isOpen={!!error} className="Modal" overlayClassName="Overlay">
-        {error && error.message}!
-      </Modal> */}
     </div>
   );
 }
