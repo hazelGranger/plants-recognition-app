@@ -30,6 +30,7 @@ export const handler: Handler = async (event, context) => {
   }
 
   const rateLimit = createRateLimit(upstash_url, upstash_key);
+  console.log(rateLimit);
   const { success, reset } = await rateLimit.limit(ip);
   console.log(success, reset);
   if (!success) {
