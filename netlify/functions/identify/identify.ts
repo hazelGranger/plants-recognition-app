@@ -18,6 +18,9 @@ export const handler: Handler = async (event, context) => {
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   };
 
+  console.log(upstash_key, "upstash_key ");
+  console.log(upstash_url, "upstash_url ");
+
   if (!upstash_url || !upstash_key) {
     return {
       headers: headers,
