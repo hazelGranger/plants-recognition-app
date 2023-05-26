@@ -7,5 +7,6 @@ export const createRateLimit = (url: string, token: string) =>
       url: url,
       token: token,
     }),
-    limiter: Ratelimit.slidingWindow(1, "1 h"),
+    limiter: Ratelimit.fixedWindow(1, "1 h"),
+    analytics: true,
   });
