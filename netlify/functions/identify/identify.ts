@@ -1,7 +1,11 @@
 import { Handler } from "@netlify/functions";
-import { identifyPlantsByImages } from "../../../src/plants-identify";
+import { identifyPlantsByImages } from "../../../src/function-services/plants-identify";
+import { rateLimit } from "../../../src/function-services/rateLimit";
 
 export const handler: Handler = async (event, context) => {
+  const ip = event.headers["x-forwarded-for"] ?? "";
+  console.log(ip);
+
   const api_key = process.env.API_KEY;
   const body = JSON.parse(event?.body ?? "{}");
   const images = body.images;
@@ -10,6 +14,18 @@ export const handler: Handler = async (event, context) => {
     "Access-Control-Allow-Headers": "Content-Type",
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   };
+
+  const { success, reset } = await rateLimit.limit(ip);
+  if (!success) {
+    const now = Date.now();
+    const retryAfter = Math.floor((reset - now) / 1000);
+    return {
+      statusCode: 429,
+      headers: {
+        ["retry-after"]: `${retryAfter}`,
+      },
+    };
+  }
 
   try {
     var result = await identifyPlantsByImages(images, api_key);
@@ -26,7 +42,9 @@ export const handler: Handler = async (event, context) => {
     return {
       headers: headers,
       statusCode: err.response?.status ?? 500,
-      body: JSON.stringify({ error: "Server fails to response, please try again later." }),
+      body: JSON.stringify({
+        error: "Server fails to response, please try again later.",
+      }),
     };
   }
 
