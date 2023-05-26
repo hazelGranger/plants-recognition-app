@@ -1,12 +1,15 @@
 import { Handler } from "@netlify/functions";
 import { identifyPlantsByImages } from "../../../src/function-services/plants-identify";
-import { rateLimit } from "../../../src/function-services/rateLimit";
+import { createRateLimit } from "../../../src/function-services/rateLimit";
 
 export const handler: Handler = async (event, context) => {
   const ip = event.headers["x-forwarded-for"] ?? "";
   console.log(ip, "ip");
 
   const api_key = process.env.API_KEY;
+  const upstash_key = process.env.UPSTASH_REDIS_REST_TOKEN;
+  const upstash_url = process.env.UPSTASH_REDIS_REST_URL;
+
   const body = JSON.parse(event?.body ?? "{}");
   const images = body.images;
   const headers = {
@@ -15,6 +18,15 @@ export const handler: Handler = async (event, context) => {
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   };
 
+  if (!upstash_url || !upstash_key) {
+    return {
+      headers: headers,
+      statusCode: 200,
+      body: ": )",
+    };
+  }
+
+  const rateLimit = createRateLimit(upstash_url, upstash_key);
   const { success, reset } = await rateLimit.limit(ip);
   console.log(success, reset);
   if (!success) {

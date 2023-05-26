@@ -1,7 +1,11 @@
 import { Redis } from "@upstash/redis";
 import { Ratelimit } from "@upstash/ratelimit";
 
-export const rateLimit = new Ratelimit({
-  redis: Redis.fromEnv(),
-  limiter: Ratelimit.slidingWindow(1, "1 h"),
-});
+export const createRateLimit = (url: string, token: string) =>
+  new Ratelimit({
+    redis: new Redis({
+      url: url,
+      token: token,
+    }),
+    limiter: Ratelimit.slidingWindow(1, "1 h"),
+  });
