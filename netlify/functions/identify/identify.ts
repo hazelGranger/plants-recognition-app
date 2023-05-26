@@ -4,7 +4,7 @@ import { rateLimit } from "../../../src/function-services/rateLimit";
 
 export const handler: Handler = async (event, context) => {
   const ip = event.headers["x-forwarded-for"] ?? "";
-  console.log(ip);
+  console.log(ip, "ip");
 
   const api_key = process.env.API_KEY;
   const body = JSON.parse(event?.body ?? "{}");

@@ -4,7 +4,6 @@ export async function identifyPlantsByImages(
   images: string[],
   api_key?: string
 ) {
-  console.log("identifyPlantsByImages", images, api_key);
   const data = {
     api_key: api_key,
     images: images,
