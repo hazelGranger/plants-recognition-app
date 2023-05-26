@@ -16,6 +16,7 @@ export const handler: Handler = async (event, context) => {
   };
 
   const { success, reset } = await rateLimit.limit(ip);
+  console.log(success, reset);
   if (!success) {
     const now = Date.now();
     const retryAfter = Math.floor((reset - now) / 1000);
@@ -28,16 +29,16 @@ export const handler: Handler = async (event, context) => {
   }
 
   try {
-    var result = await identifyPlantsByImages(images, api_key);
-    if (result.status === 200) {
-      return {
-        statusCode: 200,
-        headers: headers,
-        body: JSON.stringify({
-          ...result.data,
-        }),
-      };
-    }
+    // var result = await identifyPlantsByImages(images, api_key);
+    // if (result.status === 200) {
+    //   return {
+    //     statusCode: 200,
+    //     headers: headers,
+    //     body: JSON.stringify({
+    //       ...result.data,
+    //     }),
+    //   };
+    // }
   } catch (err: any) {
     return {
       headers: headers,
