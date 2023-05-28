@@ -22,6 +22,7 @@ export const handler: Handler = async (event, context) => {
   console.log(upstash_url, "upstash_url ");
 
   if (!upstash_url || !upstash_key) {
+    console.log("This is called");
     return {
       headers: headers,
       statusCode: 200,
