@@ -2,7 +2,7 @@ import { Handler } from "@netlify/functions";
 import { identifyPlantsByImages } from "../../../src/function-services/plants-identify";
 import { createRateLimit } from "../../../src/function-services/rateLimit";
 // import { redis } from "../../../src/function-services/redis";
-import { Redis } from "@upstash/redis";
+import { Redis } from "@upstash/redis/with-fetch";
 
 export const handler: Handler = async (event, context) => {
   const ip = event.headers["x-forwarded-for"] ?? "";
