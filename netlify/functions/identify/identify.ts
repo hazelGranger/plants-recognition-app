@@ -1,6 +1,8 @@
 import { Handler } from "@netlify/functions";
 import { identifyPlantsByImages } from "../../../src/function-services/plants-identify";
 import { createRateLimit } from "../../../src/function-services/rateLimit";
+// import { redis } from "../../../src/function-services/redis";
+import { Redis } from "@upstash/redis";
 
 export const handler: Handler = async (event, context) => {
   const ip = event.headers["x-forwarded-for"] ?? "";
@@ -29,6 +31,15 @@ export const handler: Handler = async (event, context) => {
       body: ": )",
     };
   }
+
+  const redis = new Redis({
+    url: upstash_url,
+    token: upstash_key,
+  });
+
+  await redis.set("key1", "value1");
+  let data = await redis.get("key");
+  console.log(data);
 
   const rateLimit = createRateLimit(upstash_url, upstash_key);
   const { success, reset } = await rateLimit.limit(ip);
