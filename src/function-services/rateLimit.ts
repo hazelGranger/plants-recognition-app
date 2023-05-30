@@ -5,7 +5,7 @@ export const createRateLimit = (url: string, token: string) => {
   const redisInstance = redis(url, token);
   return new Ratelimit({
     redis: redisInstance,
-    limiter: Ratelimit.fixedWindow(3, "1d"),
+    limiter: Ratelimit.fixedWindow(2, "1d"),
     prefix: "@upstash/ratelimit",
     analytics: true,
   });
