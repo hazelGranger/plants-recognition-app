@@ -1,4 +1,3 @@
-import { AxiosError } from "axios";
 import { ChangeEvent, useRef, useState } from "react";
 import Result from "./Result";
 import Title from "./components/Title";
@@ -6,22 +5,19 @@ import ActionPanel from "./components/ActionPanel";
 import ImageContainer from "./components/ImageContainer";
 import { identifySpecies } from "./services/identify";
 import { allowedImageTypes } from "./constants";
-import { Error } from "./types/error";
 
 function App() {
   const [image, setImage] = useState("");
   const [result, setResult] = useState(null);
   const [isIdentifying, setIsIdentifying] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSelectImages = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files != null) {
       var file = e.target.files[0];
       if (file && !allowedImageTypes.includes(file.type)) {
-        setError({
-          message: "Please select a valid image file like .png, .jpg, .jpeg",
-        });
+        setError("Please select a valid image file like .png, .jpg, .jpeg");
         setTimeout(() => {
           setError(null);
         }, 5000);
@@ -48,9 +44,10 @@ function App() {
       const result = await identifySpecies(image);
       setResult(result.data);
       setIsIdentifying(false);
-    } catch (error) {
+    } catch (error: any) {
       setIsIdentifying(false);
-      setError(error as AxiosError);
+      console.error(error);
+      setError(error.response?.data ?? error.message);
       setTimeout(() => {
         setError(null);
       }, 5000);
@@ -71,7 +68,7 @@ function App() {
         isIdentifying={isIdentifying}
         handleClick={onClickImagePlaceholder}
       />
-      {!!error && <p className="error">{error.message}!</p>}
+      <p className="error">{error}</p>
       <ActionPanel
         hasImage={!!image}
         isIdentifying={isIdentifying}
