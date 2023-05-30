@@ -5,12 +5,13 @@ import ActionPanel from "./components/ActionPanel";
 import ImageContainer from "./components/ImageContainer";
 import { identifySpecies } from "./services/identify";
 import { allowedImageTypes } from "./constants";
+import { useErrorHandle } from "./hooks/useErrorHandle";
 
 function App() {
   const [image, setImage] = useState("");
   const [result, setResult] = useState(null);
   const [isIdentifying, setIsIdentifying] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { error, setError } = useErrorHandle(5000);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSelectImages = (e: ChangeEvent<HTMLInputElement>) => {
@@ -18,9 +19,6 @@ function App() {
       var file = e.target.files[0];
       if (file && !allowedImageTypes.includes(file.type)) {
         setError("Please select a valid image file like .png, .jpg, .jpeg");
-        setTimeout(() => {
-          setError(null);
-        }, 5000);
         return;
       }
 
@@ -48,9 +46,6 @@ function App() {
       setIsIdentifying(false);
       console.error(error);
       setError(error.response?.data ?? error.message);
-      setTimeout(() => {
-        setError(null);
-      }, 5000);
     }
   };
 
@@ -68,7 +63,7 @@ function App() {
         isIdentifying={isIdentifying}
         handleClick={onClickImagePlaceholder}
       />
-      <p className="error">{error}</p>
+      {error && <p className="error">{error}</p>}
       <ActionPanel
         hasImage={!!image}
         isIdentifying={isIdentifying}
