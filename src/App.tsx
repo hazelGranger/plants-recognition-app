@@ -7,6 +7,7 @@ import ImageContainer from "./components/ImageContainer";
 import { identifySpecies } from "./services/identify";
 import { allowedImageTypes } from "./constants";
 import { Error } from "./types/error";
+import Footer from "./components/Footer";
 
 function App() {
   const [image, setImage] = useState("");
@@ -64,7 +65,7 @@ function App() {
   };
 
   return (
-    <div className="App-container">
+    <main className="app-container">
       <Title>Plants Identification</Title>
       <ImageContainer
         image={image}
@@ -80,7 +81,8 @@ function App() {
         handleIdentify={identify}
       />
       <Result result={result} />
-    </div>
+      <Footer />
+    </main>
   );
 }
 
