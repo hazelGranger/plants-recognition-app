@@ -1,49 +1,18 @@
-import { useRef } from "react";
-import Result from "./components/Result";
-import Title from "./components/Title";
-import ActionPanel from "./components/ActionPanel";
-import ImageContainer from "./components/ImageContainer";
-import { useErrorHandle } from "./hooks/useErrorHandle";
-import { useImageIdentify } from "./hooks/useImageIdentify";
-import { useImageUpload } from "./hooks/useImageUpload";
-import Footer from "./components/Footer";
+import { Route, Routes } from "react-router-dom";
+import Layout from "./components/Layout";
+import Home from "./pages/Home";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
 
 function App() {
-  const { error, setError } = useErrorHandle(5000);
-  const { image, handleSelectImages } = useImageUpload(setError, () => {
-    setResult(null);
-  });
-  const { result, setResult, isIdentifying, handleIdentify } = useImageIdentify(
-    image,
-    setError
-  );
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const onClickImagePlaceholder = () => {
-    if (fileInputRef && fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-
   return (
-    <main className="app-container">
-      <Title>Plants Identification</Title>
-      <ImageContainer
-        image={image}
-        isIdentifying={isIdentifying}
-        handleClick={onClickImagePlaceholder}
-      />
-      {error && <p className="error">{error}</p>}
-      <ActionPanel
-        hasImage={!!image}
-        isIdentifying={isIdentifying}
-        ref={fileInputRef}
-        handleSelectImages={handleSelectImages}
-        handleIdentify={handleIdentify}
-      />
-      <Result result={result} />
-      <Footer />
-    </main>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="/terms-and-conditions" index element={<Terms />} />
+        <Route path="/privacy" index element={<Privacy />} />
+      </Route>
+    </Routes>
   );
 }
 

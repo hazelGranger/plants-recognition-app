@@ -1,3 +1,5 @@
+import { Link as ReactRouterLink } from "react-router-dom";
+
 type LinkProps = {
   text: string;
   to: string;
@@ -6,9 +8,9 @@ type LinkProps = {
 
 const Link = ({ text, to, target }: LinkProps) => {
   return (
-    <a href={to} target={target}>
+    <ReactRouterLink to={to} target={target}>
       {text}
-    </a>
+    </ReactRouterLink>
   );
 };
 

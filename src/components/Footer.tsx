@@ -3,8 +3,9 @@ import Link from "./Link";
 const Footer = () => {
   return (
     <footer>
-      <Link to="" text="Terms and Conditions" />
-      <Link to="" text="Privacy settings" />
+      <Link to="/" text="Home" />
+      <Link to="/terms-and-conditions" text="Terms of Use" />
+      <Link to="/privacy" text="Privacy Policy" />
     </footer>
   );
 };
