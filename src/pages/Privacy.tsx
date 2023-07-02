@@ -36,7 +36,11 @@ function Privacy() {
                 To provide plant recognition services, I collect the photos you
                 upload through the App. These photos will be securely
                 transmitted and stored in the{" "}
-                <a href="https://web.plant.id/" target="_blank">
+                <a
+                  href="https://web.plant.id/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Plant.ID
                 </a>{" "}
                 service, a third-party service that I use for plant recognition.
