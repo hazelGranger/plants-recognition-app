@@ -1,62 +1,23 @@
-import { AxiosError } from "axios";
-import { ChangeEvent, useRef, useState } from "react";
-import Result from "./Result";
+import { useRef } from "react";
+import Result from "./components/Result";
 import Title from "./components/Title";
 import ActionPanel from "./components/ActionPanel";
 import ImageContainer from "./components/ImageContainer";
-import { identifySpecies } from "./services/identify";
-import { allowedImageTypes } from "./constants";
-import { Error } from "./types/error";
+import { useErrorHandle } from "./hooks/useErrorHandle";
+import { useImageIdentify } from "./hooks/useImageIdentify";
+import { useImageUpload } from "./hooks/useImageUpload";
 import Footer from "./components/Footer";
 
 function App() {
-  const [image, setImage] = useState("");
-  const [result, setResult] = useState(null);
-  const [isIdentifying, setIsIdentifying] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
+  const { error, setError } = useErrorHandle(5000);
+  const { image, handleSelectImages } = useImageUpload(setError, () => {
+    setResult(null);
+  });
+  const { result, setResult, isIdentifying, handleIdentify } = useImageIdentify(
+    image,
+    setError
+  );
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleSelectImages = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files != null) {
-      var file = e.target.files[0];
-      if (file && !allowedImageTypes.includes(file.type)) {
-        setError({
-          message: "Please select a valid image file like .png, .jpg, .jpeg",
-        });
-        setTimeout(() => {
-          setError(null);
-        }, 5000);
-        return;
-      }
-
-      var reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
-      reader.onload = () => {
-        const imageString = (reader.result as string) ?? "";
-        setImage(imageString);
-        setResult(null);
-      };
-      reader.onerror = (error) => {
-        console.log("Error: ", error);
-      };
-    }
-  };
-
-  const identify = async () => {
-    setIsIdentifying(true);
-
-    try {
-      const result = await identifySpecies(image);
-      setResult(result.data);
-      setIsIdentifying(false);
-    } catch (error) {
-      setIsIdentifying(false);
-      setError(error as AxiosError);
-      setTimeout(() => {
-        setError(null);
-      }, 5000);
-    }
-  };
 
   const onClickImagePlaceholder = () => {
     if (fileInputRef && fileInputRef.current) {
@@ -72,13 +33,13 @@ function App() {
         isIdentifying={isIdentifying}
         handleClick={onClickImagePlaceholder}
       />
-      {!!error && <p className="error">{error.message}!</p>}
+      {error && <p className="error">{error}</p>}
       <ActionPanel
         hasImage={!!image}
         isIdentifying={isIdentifying}
         ref={fileInputRef}
         handleSelectImages={handleSelectImages}
-        handleIdentify={identify}
+        handleIdentify={handleIdentify}
       />
       <Result result={result} />
       <Footer />

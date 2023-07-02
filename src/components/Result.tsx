@@ -1,10 +1,11 @@
+import { IdentifyResult, PlantSuggestion } from "../types/identify";
 import PlantCard from "./PlantCard";
 
-type IResult = {
-  result: any;
+type ResultProps = {
+  result: IdentifyResult | null;
 };
 
-function Result({ result }: IResult) {
+function Result({ result }: ResultProps) {
   return result !== null ? (
     <div className="result-container">
       {!result.is_plant ? (
@@ -12,8 +13,8 @@ function Result({ result }: IResult) {
       ) : (
         <div>
           <p>Possible Results:</p>
-          {result.suggestions.map((v: any) => {
-            return <PlantCard plant={v} />;
+          {result.suggestions.map((v: PlantSuggestion) => {
+            return <PlantCard plant={v} key={v.id} />;
           })}
         </div>
       )}

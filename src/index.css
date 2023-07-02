@@ -144,6 +144,14 @@ a {
   justify-content: space-between;
 }
 
+.plant-names {
+  white-space: pre-wrap;
+  word-break: break-word;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1rem;
+}
+
 .title {
   margin: 0;
   margin-bottom: 1rem;
