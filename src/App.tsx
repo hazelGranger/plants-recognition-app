@@ -3,8 +3,10 @@ import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
+import { useScrollToTopWhenNavigate } from "./hooks/useScrollToTopWhenNavigate";
 
 function App() {
+  useScrollToTopWhenNavigate();
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
