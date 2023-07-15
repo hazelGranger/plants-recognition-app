@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import placeholderImage from "../placeholder-image.png";
+import { faMagnifyingGlass, faImage } from "@fortawesome/free-solid-svg-icons";
 
 type ImageContainerProps = {
   image: string; // base64string
@@ -18,18 +17,19 @@ const ImageContainer = ({
       {image ? (
         <img className="image" src={image} alt="uploaded plants" />
       ) : (
-        <div
-          className="image-placeholder"
-          style={{ backgroundImage: `url(${placeholderImage})` }}
-          onClick={handleClick}
-        ></div>
+        <div className="image-placeholder" onClick={handleClick}>
+          <FontAwesomeIcon
+            className="image-placeholder-icon"
+            icon={faImage}
+          ></FontAwesomeIcon>
+        </div>
       )}
 
       {isIdentifying && (
         <>
           <div className="image-filter"></div>
           <FontAwesomeIcon
-            className="identifying"
+            className="identifying-icon"
             icon={faMagnifyingGlass}
           ></FontAwesomeIcon>
         </>
