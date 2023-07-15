@@ -37,6 +37,7 @@ function Home() {
         hasImage={!!image}
         isIdentifying={isIdentifying}
         ref={fileInputRef}
+        handleFocus={onClickImagePlaceholder}
         handleSelectImages={handleSelectImages}
         handleIdentify={handleIdentify}
       />

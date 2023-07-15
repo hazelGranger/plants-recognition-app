@@ -107,11 +107,21 @@ a {
   width: 100%;
   background-size: contain;
   padding-top: 62.5%;
-  border: 2px solid #a1a1a1;
+  border: 2px solid #999;
   margin: 3rem 0 1.5rem;
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
+  position: relative;
+}
+
+.image-placeholder-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  color: #999;
 }
 
 .image {
@@ -195,7 +205,7 @@ a {
   animation: spin 0.5s infinite linear;
 }
 
-.identifying {
+.identifying-icon {
   position: absolute;
   color: #fff;
   top: calc(50% - 1rem);

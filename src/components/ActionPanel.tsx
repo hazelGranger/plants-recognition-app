@@ -7,12 +7,22 @@ type ActionPanelProps = {
   hasImage: boolean;
   isIdentifying: boolean;
   ref: React.RefObject<HTMLInputElement>;
+  handleFocus: () => void;
   handleSelectImages: (e: ChangeEvent<HTMLInputElement>) => void;
   handleIdentify: () => void;
 };
 
 const ActionPanel = forwardRef<HTMLInputElement, ActionPanelProps>(
-  ({ hasImage, isIdentifying, handleSelectImages, handleIdentify }, ref) => {
+  (
+    {
+      hasImage,
+      isIdentifying,
+      handleSelectImages,
+      handleIdentify,
+      handleFocus,
+    },
+    ref
+  ) => {
     return (
       <div className="button-wrapper">
         {hasImage && (
@@ -28,6 +38,7 @@ const ActionPanel = forwardRef<HTMLInputElement, ActionPanelProps>(
           hasImage={hasImage}
           ref={ref}
           handleSelectImages={handleSelectImages}
+          handleFocus={handleFocus}
         />
       </div>
     );
