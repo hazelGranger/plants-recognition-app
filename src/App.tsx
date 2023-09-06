@@ -1,9 +1,8 @@
 import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
+import Home from "./pages/Home";
 import { useScrollToTopWhenNavigate } from "./hooks/useScrollToTopWhenNavigate";
-
-const Home = lazy(() => import("./pages/Home"));
 const Terms = lazy(() => import("./pages/Terms"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 

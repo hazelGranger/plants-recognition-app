@@ -8,7 +8,7 @@ type titleProps = {
 const Title = ({ children }: titleProps) => {
   return (
     <h2 className="title">
-      <img src={logo} className="logo" alt="logo" />
+      <img src={logo} className="logo" alt="logo" width="2rem" height="auto" />
       {children}
     </h2>
   );
