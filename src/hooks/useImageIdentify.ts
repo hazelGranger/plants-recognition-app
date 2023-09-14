@@ -12,7 +12,7 @@ export const useImageIdentify = (
     setIsIdentifying(true);
 
     try {
-      const result = await identifySpecies(image);
+      const result: any = await identifySpecies(image);
       setResult(result.data);
       setIsIdentifying(false);
     } catch (error: any) {
