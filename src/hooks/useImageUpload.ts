@@ -7,29 +7,40 @@ export const useImageUpload = (
 ) => {
   const [image, setImage] = useState("");
 
+  const handleImageUpload = (file: File) => {
+    if (file && !allowedImageTypes.includes(file.type)) {
+      setError("Please select a valid image file like .png, .jpg, .jpeg");
+      return;
+    }
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const imageString = (reader.result as string) ?? "";
+      setImage(imageString);
+      onSelectImage();
+    };
+    reader.onerror = (error) => {
+      console.error("Error: ", error);
+    };
+  };
+
   const handleSelectImages = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files != null) {
-      var file = e.target.files[0];
-      if (file && !allowedImageTypes.includes(file.type)) {
-        setError("Please select a valid image file like .png, .jpg, .jpeg");
-        return;
-      }
+      handleImageUpload(e.target.files[0]);
+    }
+  };
 
-      var reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
-      reader.onload = () => {
-        const imageString = (reader.result as string) ?? "";
-        setImage(imageString);
-        onSelectImage();
-      };
-      reader.onerror = (error) => {
-        console.error("Error: ", error);
-      };
+  const handleDropImage = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+
+    if (e.dataTransfer.files != null) {
+      handleImageUpload(e.dataTransfer.files[0]);
     }
   };
 
   return {
     image,
     handleSelectImages,
+    handleDropImage,
   };
 };

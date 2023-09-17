@@ -101,18 +101,23 @@ a {
 
 .image-container {
   position: relative;
+  margin-bottom: 1.5rem;
 }
 
 .image-placeholder {
   width: 100%;
   background-size: contain;
   padding-top: 62.5%;
-  border: 2px solid #999;
+  border: 2px dashed #999;
   margin: 3rem 0 1.5rem;
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
   position: relative;
+}
+
+.image-placeholder--isDragging {
+  outline: 2px solid #afce90;
 }
 
 .image-placeholder-icon {
@@ -138,6 +143,14 @@ a {
   left: 0;
   background-color: #000;
   opacity: 0.65;
+}
+
+.image-instruction {
+  text-align: center;
+  color: #333;
+  line-height: 1.4;
+  margin-top: -5%;
+  padding-bottom: 2rem;
 }
 
 .result-container {

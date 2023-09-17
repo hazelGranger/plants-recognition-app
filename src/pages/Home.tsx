@@ -9,9 +9,12 @@ import Title from "../components/Title";
 
 function Home() {
   const { error, setError } = useErrorHandle(5000);
-  const { image, handleSelectImages } = useImageUpload(setError, () => {
-    setResult(null);
-  });
+  const { image, handleSelectImages, handleDropImage } = useImageUpload(
+    setError,
+    () => {
+      setResult(null);
+    }
+  );
   const { result, setResult, isIdentifying, handleIdentify } = useImageIdentify(
     image,
     setError
@@ -31,6 +34,7 @@ function Home() {
         image={image}
         isIdentifying={isIdentifying}
         handleClick={onClickImagePlaceholder}
+        handleDropImage={handleDropImage}
       />
       {error && <p className="error">{error}</p>}
       <ActionPanel
